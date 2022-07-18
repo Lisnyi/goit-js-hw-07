@@ -3,23 +3,23 @@ import { galleryItems } from './gallery-items.js';
 
 const galleryRef = document.querySelector(".gallery")
 
-const galleryMarkup = galleryItems.map(item =>
+const galleryMarkup = galleryItems.map(({original, preview, description}) =>
   `<div class="gallery__item">
-  <a class="gallery__link" href="${item.original}">
+  <a class="gallery__link" href="${original}">
     <img
       class="gallery__image"
-      src="${item.preview}"
-      data-source="${item.original}"
-      alt="${item.description}"
+      src="${preview}"
+      data-source="${original}"
+      alt="${description}"
     />
   </a>
   </div>`).join("")
 
 galleryRef.innerHTML = galleryMarkup
 
-galleryRef.addEventListener("click", onGalleryCardClick)
+galleryRef.addEventListener("click", clickOnGalleryCard)
 
-function onGalleryCardClick (e) {
+function clickOnGalleryCard (e) {
   if (e.target.nodeName !== "IMG"){
     return
   }
@@ -29,8 +29,8 @@ function onGalleryCardClick (e) {
     
   window.addEventListener("keydown", closeModalByEscape) 
   
-  function closeModalByEscape(e) {
-    const keyName = e.key
+  function closeModalByEscape({key}) {
+    const keyName = key
     if (keyName !== "Escape") {
       return
     }
